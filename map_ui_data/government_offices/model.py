@@ -15,11 +15,6 @@ class GmPoint(BaseModel):
     position: Position
 
 
-class Coordinate(BaseModel):
-    latitude: str
-    longitude: str
-
-
 class GmPlace(BaseModel):
     id: str
     name: str
@@ -27,13 +22,3 @@ class GmPlace(BaseModel):
 
     class Config:
         extra = "ignore"
-
-
-class Place(BaseModel):
-    name: str
-    address: str
-
-
-
-# d = {'position': {'direct_position': {'coordinate': '40.822358 140.74732', 'dimension': '2'}}}
-# print(GmPoint.model_validate(d))
