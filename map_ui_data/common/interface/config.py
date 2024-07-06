@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class S3Config(BaseModel):
@@ -6,6 +6,7 @@ class S3Config(BaseModel):
 
 
 class DBConfig(BaseModel):
+    driver: str = Field(default="mysql+mysqlconnector")
     host: str
     port: int
     user: str
