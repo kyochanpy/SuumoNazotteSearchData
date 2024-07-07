@@ -1,10 +1,10 @@
 from ..common.client import DB, S3
 from ..common.interface import Config, Record
-from .parser import GovernmentOfficesXmlParser
+from .parser import MedicalInstitutionXmlParser
 
 
-class GovernmentOffices:
-    def __init__(self, config: Config, db: DB, s3: S3, parser: GovernmentOfficesXmlParser, prefix: str):
+class MedicalInstitution:
+    def __init__(self, config: Config, db: DB, s3: S3, parser: MedicalInstitutionXmlParser, prefix: str):
         self._prefix = prefix
         self._config = config
         self._db = db
