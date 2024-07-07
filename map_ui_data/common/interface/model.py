@@ -13,6 +13,7 @@ class Place(BaseModel):
 
 
 class Record(BaseModel):
+    type: str
     name: str
     address: str
     latitude: float

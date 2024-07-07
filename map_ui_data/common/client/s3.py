@@ -8,5 +8,5 @@ class S3():
     def client(self):
         return boto3.client("s3")
 
-    def get_object(self, key: str):
-        return self.client().get_object(Bucket=self._config.bucekt_name, Key=key)
+    def get_object(self, key: str) -> bytes:
+        return self.client().get_object(Bucket=self._config.bucekt_name, Key=key).get("Body").read()
