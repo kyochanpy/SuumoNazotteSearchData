@@ -28,7 +28,7 @@ class GovernmentOffices:
             if not place:
                 continue
             records.append(Record(
-                type=self._prefix,
+                type=self._prefix.replace("_", " "),
                 name=place.name,
                 address=place.address,
                 latitude=coordinate.latitude,
