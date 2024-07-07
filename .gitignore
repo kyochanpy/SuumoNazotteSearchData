@@ -163,3 +163,4 @@ cython_debug/
 
 
 setting/*.toml
+mock/s3/*
