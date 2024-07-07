@@ -1,13 +1,11 @@
-import xmltodict  # type: ignore
+import xmltodict
 from typing import Any, Sequence
-from .model import GmPlace, GmPoint  # type: ignore
-from ..common.interface import Coordinate, Place  # type: ignore
+from .model import GmPlace, GmPoint
+from ..common.interface import Coordinate, Place
 
 
 class GovernmentOfficesXmlParser:
-    def __init__(self, xml: bytes):
-        self._xml = xml
-        self._xml_dict = self._xml_to_dict()
+    def __init__(self):
         self._coordinates_rename_dict = {
             "@id": "id",
             "jps:GM_Point.position": "position",
@@ -33,11 +31,11 @@ class GovernmentOfficesXmlParser:
         else:
             return data
 
-    def _xml_to_dict(self):
-        return xmltodict.parse(self._xml)
+    def _xml_to_dict(self, xml: bytes):
+        return xmltodict.parse(xml)
 
-    def _pre_parse(self) -> dict[str, Any] | None:
-        gi = self._xml_dict.get('ksj:GI')
+    def _pre_parse(self, xml: bytes) -> dict[str, Any] | None:
+        gi = self._xml_to_dict(xml).get('ksj:GI')
         if not gi:
             return None
         dataset = gi.get('dataset')
@@ -54,9 +52,9 @@ class GovernmentOfficesXmlParser:
             return None
         return obj
 
-    def get_coordinates(self) -> dict[str, Coordinate] | None:
+    def get_coordinates(self, xml: bytes) -> dict[str, Coordinate] | None:
         # モデル作んのめんどいからいいや
-        obj = self._pre_parse()
+        obj = self._pre_parse(xml)
         gm_points: Sequence[dict[str, Any]] | None = obj.get('jps:GM_Point')  # type: ignore
         if not gm_points:
             return None
@@ -68,9 +66,9 @@ class GovernmentOfficesXmlParser:
             coordinates[gm_point.id] = Coordinate(latitude=latitude, longitude=longitude)
         return coordinates
 
-    def get_places(self) -> dict[str, Place] | None:
+    def get_places(self, xml: bytes) -> dict[str, Place] | None:
         # モデル作んのめんどいからいいや
-        obj = self._pre_parse()
+        obj = self._pre_parse(xml)
         gm_places: Sequence[dict[str, str]] | None = obj.get('ksj:FE01')  # type: ignore
         if not gm_places:
             return None
