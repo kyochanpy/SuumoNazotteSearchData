@@ -1,16 +1,16 @@
-from ..common.utils import load_config  # type: ignore
-from ..common.client import DB, S3  # type: ignore
-from .parser import GovernmentOfficesXmlParser  # type: ignore
-from .main import GovernmentOffices  # type: ignore
+from ..common.utils import load_config
+from ..common.client import DB, S3
+from .parser import GovernmentOfficesXmlParser
+from .main import GovernmentOffices
 
 
 def main():
     config = load_config()
     government_offices = GovernmentOffices(
         config,
-        DB,
-        S3,
-        GovernmentOfficesXmlParser,
+        DB(config),
+        S3(config),
+        GovernmentOfficesXmlParser(),
         "government_offices",
     )
     for i in range(47):

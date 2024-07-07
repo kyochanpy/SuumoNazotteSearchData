@@ -1,0 +1,8 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.mypy-type-checker",
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true
+    }
+}
+

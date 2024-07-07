@@ -1,6 +1,6 @@
-from ..common.client import DB, S3  # type: ignore
-from ..common.interface import Config, Record  # type: ignore
-from .parser import GovernmentOfficesXmlParser  # type: ignore
+from ..common.client import DB, S3
+from ..common.interface import Config, Record
+from .parser import GovernmentOfficesXmlParser
 
 
 class GovernmentOffices:
@@ -15,9 +15,8 @@ class GovernmentOffices:
         key = f"{self._config.s3.bucekt_name}/{self._prefix}/{prefecture_code}.xml"
         xml = self._s3.get_object(key)
 
-        parser = self._parser(xml)
-        coordinates = parser.get_coordinates()
-        places = parser.get_places()
+        coordinates = self._parser.get_coordinates(xml)
+        places = self._parser.get_places(xml)
 
         if not coordinates or not places:
             raise Exception("Failed to parse xml")
