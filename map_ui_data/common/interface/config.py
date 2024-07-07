@@ -2,13 +2,17 @@ from pydantic import BaseModel, Field
 
 
 class S3Config(BaseModel):
-    bucekt_name: str
+    bucket_name: str
+    access_key: str
+    secret_key: str
+    region: str
+    endpoint_url: str
 
 
 class DBConfig(BaseModel):
     driver: str = Field(default="mysql+mysqlconnector")
     host: str
-    port: int
+    port: str
     user: str
     password: str
     database: str

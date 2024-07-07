@@ -1,6 +1,6 @@
 from ..interface import Config, Record  # type: ignore
 from typing import Sequence
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 
@@ -11,7 +11,7 @@ class DB:
 
     @contextmanager
     def session(self):
-        engine = create_engine(self.url)
+        engine = create_engine(self._url)
         Session = sessionmaker(bind=engine)
         session = Session()
 
@@ -25,6 +25,16 @@ class DB:
             session.close()
 
     def insert(self, records: Sequence[Record]):
+        values: list[str] = []
+        for record in records:
+            values.append(f"('{record.type}', '{record.name}', '{record.address}', '{record.description}', {record.latitude}, {record.longitude})")
         with self.session() as session:
-            session.bulk_save_objects(records)
+            stmt = f"""
+                INSERT INTO master
+                    (type, name, address, description, latitude, longitude)
+                VALUES
+                    {",".join(values)}
+            """
+            print(stmt)
+            session.execute(text(stmt))
 

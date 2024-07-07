@@ -2,6 +2,7 @@ import xmltodict
 from typing import Any, Sequence
 from .model import GmPlace, GmPoint
 from ..common.interface import Coordinate, Place
+from ..common.utils import cleanse_id
 
 
 class FuelStationXmlParser:
@@ -62,7 +63,7 @@ class FuelStationXmlParser:
             gm_point = GmPoint.model_validate(self._rename_keys(content, self._coordinates_rename_dict))
             coordinate = gm_point.position.direct_position.coordinate
             latitude, longitude = coordinate.split(" ")
-            coordinates[gm_point.id] = Coordinate(latitude=latitude, longitude=longitude)
+            coordinates[cleanse_id(gm_point.id)] = Coordinate(latitude=latitude, longitude=longitude)
         return coordinates
 
     def get_places(self, xml: bytes) -> dict[str, Place] | None:
@@ -75,17 +76,5 @@ class FuelStationXmlParser:
         for content in gm_places:
             gm_place = GmPlace.model_validate(self._rename_keys(content, self._place_rename_dict))
             id = "n" + gm_place.id.split("_")[-1]
-            places[id] = Place(name="", address=gm_place.address, description="")
+            places[cleanse_id(id)] = Place(name="", address=gm_place.address, description="")
         return places
-
-
-def test():
-    parser = FuelStationXmlParser()
-    with open("sample/fuel_station/02.xml", "rb") as f:
-        xml = f.read()
-    coordinates = parser.get_coordinates(xml)
-    places = parser.get_places(xml)
-    print(coordinates)
-    print(places)
-
-test()
