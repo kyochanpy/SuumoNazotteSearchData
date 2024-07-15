@@ -77,5 +77,5 @@ class PublicFacilitiesXmlParser:
         for content in gm_places:
             gm_place = GmPlace.model_validate(self._rename_keys(content, self._place_rename_dict))
             id = "p" + gm_place.id.split("_")[-1]
-            places[cleanse_id(id)] = Place(name=gm_place.name, address=gm_place.address, description="")
+            places[cleanse_id(id)] = Place(name=gm_place.name, address="" if gm_place.address is None else gm_place.address, description="")
         return places

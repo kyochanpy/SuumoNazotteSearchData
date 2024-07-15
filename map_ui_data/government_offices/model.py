@@ -18,7 +18,7 @@ class GmPoint(BaseModel):
 class GmPlace(BaseModel):
     id: str
     name: str
-    address: str
+    address: str | None
 
     class Config:
         extra = "ignore"
