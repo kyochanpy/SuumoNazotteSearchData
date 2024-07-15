@@ -6,15 +6,15 @@ from .main import PublicFacilities
 
 def main():
     config = load_config()
-    medical_institution = PublicFacilities(
+    public_facilities = PublicFacilities(
         config,
         DB(config),
         S3(config),
         PublicFacilitiesXmlParser(),
-        "medical_institution",
+        "public_facilities",
     )
     for i in range(47):
-        medical_institution.run(f"{i+1:0>2}")
+        public_facilities.run(f"{i+1:0>2}")
 
 
 if __name__ == "__main__":

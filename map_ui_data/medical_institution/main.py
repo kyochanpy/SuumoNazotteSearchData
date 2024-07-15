@@ -12,7 +12,7 @@ class MedicalInstitution:
         self._parser = parser
 
     def run(self, prefecture_code: str) -> None:
-        key = f"{self._config.s3.bucekt_name}/{self._prefix}/{prefecture_code}.xml"
+        key = f"{self._prefix}/{prefecture_code}.xml"
         xml = self._s3.get_object(key)
 
         coordinates = self._parser.get_coordinates(xml)
@@ -34,5 +34,4 @@ class MedicalInstitution:
                 latitude=coordinate.latitude,
                 longitude=coordinate.longitude,
             ))
-
         self._db.insert(records)
