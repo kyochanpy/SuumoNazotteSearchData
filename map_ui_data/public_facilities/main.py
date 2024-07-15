@@ -17,7 +17,6 @@ class PublicFacilities:
 
         coordinates = self._parser.get_coordinates(xml)
         places = self._parser.get_places(xml)
-        print(places)
 
         if not coordinates or not places:
             raise Exception("Failed to parse xml")

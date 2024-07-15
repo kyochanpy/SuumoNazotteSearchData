@@ -35,6 +35,5 @@ class DB:
                 VALUES
                     {",".join(values)}
             """
-            print(stmt)
             session.execute(text(stmt))
 
