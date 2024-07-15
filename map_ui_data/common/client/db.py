@@ -27,7 +27,7 @@ class DB:
     def insert(self, records: Sequence[Record]):
         values: list[str] = []
         for record in records:
-            values.append(f"('{record.type}', '{record.name}', '{record.address}', '{record.description}', ST_GeomFromText('POINT({record.latitude}, {record.longitude})')")
+            values.append(f"('{record.type}', '{record.name}', '{record.address}', '{record.description}', ST_GeomFromText('POINT({record.latitude} {record.longitude})'))")
         with self.session() as session:
             stmt = f"""
                 INSERT INTO master
