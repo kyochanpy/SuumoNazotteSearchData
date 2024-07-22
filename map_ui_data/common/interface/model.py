@@ -13,7 +13,7 @@ class Place(BaseModel):
 
 
 class Record(BaseModel):
-    type: str
+    point_type: str
     name: str
     address: str
     description: str

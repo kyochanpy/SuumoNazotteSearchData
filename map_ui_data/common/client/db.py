@@ -27,11 +27,11 @@ class DB:
     def insert(self, records: Sequence[Record]):
         values: list[str] = []
         for record in records:
-            values.append(f"('{record.type}', '{record.name}', '{record.address}', '{record.description}', ST_GeomFromText('POINT({record.longitude} {record.latitude})'))")
+            values.append(f"('{record.point_type}', '{record.name}', '{record.address}', '{record.description}', ST_GeomFromText('POINT({record.longitude} {record.latitude})'), '{record.latitude}', '{record.longitude}')")
         with self.session() as session:
             stmt = f"""
                 INSERT INTO master
-                    (type, name, address, description, location)
+                    (point_type, name, address, description, location, latitude, longitude)
                 VALUES
                     {",".join(values)}
             """
