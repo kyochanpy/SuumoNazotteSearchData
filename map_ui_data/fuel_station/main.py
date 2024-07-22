@@ -27,7 +27,7 @@ class FuelStation:
             if not place:
                 continue
             records.append(Record(
-                type=self._prefix.replace("_", " "),
+                point_type=self._prefix.replace("_", " "),
                 name=place.name,
                 address=place.address,
                 description=place.description,
