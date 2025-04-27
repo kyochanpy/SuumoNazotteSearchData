@@ -1,6 +1,6 @@
-import toml  # type: ignore
+import toml
 import re
-from .interface import Config
+from .models import Config
 
 
 def load_config():

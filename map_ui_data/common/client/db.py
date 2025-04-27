@@ -1,4 +1,4 @@
-from ..interface import Config, Record  # type: ignore
+from ..models import Config, Record
 from typing import Sequence
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
