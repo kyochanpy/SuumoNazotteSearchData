@@ -1,9 +1,16 @@
 import xmltodict
 from typing import Any, Sequence
-from ..common.models import Coordinate, Place, GmPlace, GmPoint
+from .models import Coordinate, Place, GmPlace, GmPoint
 
 
-class GovernmentOfficesXmlParser:
+class XmlParser:
+    POINT_TYPE_AND_TAG_MAP = {
+        "fuel_station": "ksj:FG01",
+        "government_offices": "ksj:FE01",
+        "public_facilities": "ksj:FB01",
+        "medical_institution": "ksj:DE01",
+    }
+
     def _xml_to_dict(self, xml: bytes):
         return xmltodict.parse(xml)
 
@@ -42,12 +49,12 @@ class GovernmentOfficesXmlParser:
             coordinates[gm_point.id] = Coordinate(latitude=latitude, longitude=longitude)
         return coordinates
 
-    def get_places(self, xml: bytes) -> dict[str, Place] | None:
+    def get_places(self, xml: bytes, point_type: str) -> dict[str, Place] | None:
         """
         場所データを取得する
         """
         obj = self._pre_parse(xml)
-        gm_places: Sequence[dict[str, str]] | None = obj.get('ksj:FE01')
+        gm_places: Sequence[dict[str, str]] | None = obj.get(self.POINT_TYPE_AND_TAG_MAP[point_type])
         if not gm_places:
             return None
         places: dict[str, Place] = {}
@@ -55,4 +62,3 @@ class GovernmentOfficesXmlParser:
             gm_place = GmPlace.model_validate(content)
             places[gm_place.id] = Place(name=gm_place.name, address=gm_place.address, description=gm_place.description)
         return places
-
