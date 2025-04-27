@@ -1,5 +1,5 @@
 from ..common.client import DB, S3
-from ..common.interface import Config, Record
+from ..common.models import Config, Record
 from .parser import FuelStationXmlParser
 
 
@@ -17,7 +17,6 @@ class FuelStation:
 
         coordinates = self._parser.get_coordinates(xml)
         places = self._parser.get_places(xml)
-
         if not coordinates or not places:
             raise Exception("Failed to parse xml")
 
