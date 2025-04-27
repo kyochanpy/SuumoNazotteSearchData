@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Coordinate(BaseModel):
@@ -7,15 +7,15 @@ class Coordinate(BaseModel):
 
 
 class Place(BaseModel):
-    name: str
-    address: str
-    description: str
+    name: str | None = Field(default=None)
+    address: str | None = Field(default=None)
+    description: str | None = Field(default=None)
 
 
 class Record(BaseModel):
     point_type: str
-    name: str
-    address: str
-    description: str
+    name: str | None = Field(default=None)
+    address: str | None = Field(default=None)
+    description: str | None = Field(default=None)
     latitude: float
     longitude: float

@@ -24,9 +24,9 @@ class GmPoint(BaseModel):
 
 class GmPlace(BaseModel):
     id: str = Field(validation_alias="ksj:POS")
-    name: str = Field(validation_alias="ksj:PON", default="")
-    address: str = Field(validation_alias="ksj:ADS", default="")
-    description: str = Field(validation_alias="ksj:POD", default="")
+    name: str | None = Field(validation_alias="ksj:PON", default=None)
+    address: str | None = Field(validation_alias="ksj:ADS", default=None)
+    description: str | None = Field(validation_alias="ksj:POD", default=None)
 
     @field_validator("id", mode="before")
     @classmethod
