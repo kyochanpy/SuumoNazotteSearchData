@@ -164,3 +164,4 @@ cython_debug/
 
 setting/*.toml
 mock/s3/*
+mock/db/postgres-data/*

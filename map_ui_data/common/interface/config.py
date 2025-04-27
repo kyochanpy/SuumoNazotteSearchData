@@ -10,7 +10,7 @@ class S3Config(BaseModel):
 
 
 class DBConfig(BaseModel):
-    driver: str = Field(default="mysql+mysqlconnector")
+    driver: str = Field(default="postgresql+psycopg2")
     host: str
     port: str
     user: str
