@@ -1,7 +1,7 @@
 from .utils import load_config
 from .client import DB, S3
-from .parser import XmlParser
-from .main import PointProcessorFactory
+from .xml_parser import XmlParser
+from .point_processor import PointProcessorFactory
 from tqdm import tqdm
 
 def main():
