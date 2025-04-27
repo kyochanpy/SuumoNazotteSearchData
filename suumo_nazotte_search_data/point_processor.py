@@ -1,6 +1,6 @@
 from .client import DB, S3
 from .models import Config, Record
-from .parser import XmlParser
+from .xml_parser import XmlParser
 
 
 class PointProcessor:
