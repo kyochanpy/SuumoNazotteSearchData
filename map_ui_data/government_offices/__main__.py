@@ -15,7 +15,6 @@ def main():
     )
     for i in range(47):
         government_offices.run(f"{i+1:0>2}")
-        break
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 from ..common.client import DB, S3
-from ..common.interface import Config, Record
+from ..common.models import Config, Record
 from .parser import PublicFacilitiesXmlParser
 
 
