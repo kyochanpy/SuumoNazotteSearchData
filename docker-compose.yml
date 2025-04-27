@@ -1,15 +1,18 @@
 services:
   db:
-    image: mysql:latest
-    container_name: mysql
+    image: postgis/postgis
+    container_name: postgres
     ports:
-      - 3006:3306
+      - 5432:5432
     environment:
-      MYSQL_ROOT_PASSWORD: kyochanpy
+      POSTGRES_USER: kyochanpy
+      POSTGRES_PASSWORD: kyochanpy
+      POSTGRES_DB: map_data
       TZ: Asia/Tokyo
     volumes:
+      - ./mock/db/postgres-data:/var/lib/postgresql/data
       - ./mock/db/initdb.d:/docker-entrypoint-initdb.d
-      - ./mock/db/conf.d:/etc/mysql/conf.d
+    command: postgres -c max_connections=100 -c shared_buffers=256MB
 
   minio:
     image: minio/minio

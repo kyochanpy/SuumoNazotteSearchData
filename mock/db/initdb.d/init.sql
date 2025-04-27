@@ -1,16 +1,13 @@
-SET NAMES 'utf8mb4';
+CREATE EXTENSION postgis;
 
-DROP DATABASE IF EXISTS test_map_ui;
-CREATE DATABASE test_map_ui;
-USE test_map_ui;
+CREATE TABLE IF NOT EXISTS master (
+    id SERIAL PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    point_type VARCHAR(50),
+    name VARCHAR(255),
+    address TEXT,
+    description TEXT,
+    location GEOMETRY(Point, 4326) NOT NULL
+);
 
-CREATE TABLE master (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    point_type VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    location GEOMETRY NOT NULL,
-    latitude DOUBLE NOT NULL,
-    longitude DOUBLE NOT NULL
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE INDEX idx_location ON master USING GIST(location);

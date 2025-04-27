@@ -1,7 +1,8 @@
-import boto3  # type: ignore
-from ..interface import Config  # type: ignore
+import boto3
+from ..models import Config
 
-class S3():
+
+class S3:
     def __init__(self, config: Config):
         self._config = config.s3
 

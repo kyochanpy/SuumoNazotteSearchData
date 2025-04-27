@@ -1,4 +1,4 @@
-from ..interface import Config, Record  # type: ignore
+from ..models import Config, Record
 from typing import Sequence
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
@@ -27,11 +27,13 @@ class DB:
     def insert(self, records: Sequence[Record]):
         values: list[str] = []
         for record in records:
-            values.append(f"('{record.point_type}', '{record.name}', '{record.address}', '{record.description}', ST_GeomFromText('POINT({record.longitude} {record.latitude})'), '{record.latitude}', '{record.longitude}')")
+            values.append(
+                f"('{record.point_type}', '{record.name}', '{record.address}', '{record.description}',ST_SetSRID(ST_MakePoint({record.longitude}, {record.latitude}), 4326))"
+            )
         with self.session() as session:
             stmt = f"""
                 INSERT INTO master
-                    (point_type, name, address, description, location, latitude, longitude)
+                    (point_type, name, address, description, location)
                 VALUES
                     {",".join(values)}
             """
